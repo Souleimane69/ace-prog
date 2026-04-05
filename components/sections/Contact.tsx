@@ -185,12 +185,8 @@ export default function Contact() {
         >
           {/* Row: Nom + Tel */}
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1rem",
-            }}
-            className="sm:grid-cols-2"
+            className="grid grid-cols-1 sm:grid-cols-2"
+            style={{ gap: "1rem" }}
           >
             <div>
               <label style={labelStyle} htmlFor="nom">

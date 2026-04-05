@@ -118,6 +118,7 @@ export default function Hero() {
 
       {/* Content */}
       <div
+        className="hero-content"
         style={{
           position: "relative",
           zIndex: 3,
@@ -186,6 +187,7 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
+          className="hero-buttons"
           style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "4rem" }}
         >
           <button
@@ -254,6 +256,7 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
+          className="hero-stats"
           style={{
             display: "flex",
             gap: "3rem",
