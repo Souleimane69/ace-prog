@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
 import Expertise from "@/components/sections/Expertise";
 import Benefits from "@/components/sections/Benefits";
+import NLink from "@/components/sections/NLink";
 import Actualites from "@/components/sections/Actualites";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
@@ -20,6 +21,7 @@ export default function Home() {
         <Services />
         <Expertise />
         <Benefits />
+        <NLink />
         <Actualites posts={posts} />
         <Contact />
       </main>
