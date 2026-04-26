@@ -48,40 +48,40 @@ interface Tech {
 const TECHNICIANS: Tech[] = [
   {
     id: 1,
-    initials: "LM",
-    name: "Lucas Martin",
+    initials: "AP",
+    name: "ACE PROG",
     zone: "Zone Nord",
     color: "#e63946",
     hoverColor: "#ff5a66",
     departments: ["Ain (01)", "Allier (03)", "Loire (42)", "Rhône (69)", "Haute-Savoie (74)"],
-    phone: "06 XX XX XX XX", // TODO: à compléter
-    email: "l.martin@aceprog.fr", // TODO: à compléter
+    phone: "0658220224",
+    email: "contact@aceprog.com",
     specialty: "Reprogrammation Stage 1 & 2, véhicules sport",
     availability: "Lun – Ven : 8h – 18h",
   },
   {
     id: 2,
-    initials: "TD",
-    name: "Théo Dumont",
+    initials: "AP",
+    name: "ACE PROG",
     zone: "Zone Centre",
     color: "#ff8660",
     hoverColor: "#ffaa88",
     departments: ["Cantal (15)", "Haute-Loire (43)", "Puy-de-Dôme (63)"],
-    phone: "06 XX XX XX XX",
-    email: "t.dumont@aceprog.fr",
+    phone: "0658220224",
+    email: "contact@aceprog.com",
     specialty: "Diagnostic électronique, calculateurs",
     availability: "Lun – Ven : 8h – 18h",
   },
   {
     id: 3,
-    initials: "RF",
-    name: "Romain Faure",
+    initials: "AP",
+    name: "ACE PROG",
     zone: "Zone Sud-Est & Alpes",
     color: "#c0392b",
     hoverColor: "#d44a3b",
     departments: ["Ardèche (07)", "Drôme (26)", "Isère (38)", "Savoie (73)"],
-    phone: "06 XX XX XX XX",
-    email: "r.faure@aceprog.fr",
+    phone: "0658220224",
+    email: "contact@aceprog.com",
     specialty: "Optimisation performance, véhicules 4×4",
     availability: "Lun – Sam : 8h – 19h",
   },
@@ -295,8 +295,8 @@ function TechCard({ tech, onClose }: { tech: Tech; onClose: () => void }) {
 type Position = { coordinates: [number, number]; zoom: number };
 
 const DEFAULT_POSITION: Position = {
-  coordinates: [4.65, 45.45], // centre géographique ARA
-  zoom: 4,
+  coordinates: [2.5, 46.5], // centre géographique France
+  zoom: 1,
 };
 
 export default function FranceMap() {
@@ -338,7 +338,7 @@ export default function FranceMap() {
           marginBottom: "1rem",
         }}
       >
-        Zone d&apos;intervention
+        Zone d&apos;intervention — Toute la France
       </h3>
 
       {/* Conteneur carte */}
@@ -388,7 +388,7 @@ export default function FranceMap() {
           ].map(({ label, delta }) => (
             <button
               key={label}
-              title={delta === 0 ? "Recentrer sur ARA" : label === "+" ? "Zoomer" : "Dézoomer"}
+              title={delta === 0 ? "Recentrer sur la France" : label === "+" ? "Zoomer" : "Dézoomer"}
               onClick={() => {
                 if (delta === 0) {
                   setPosition(DEFAULT_POSITION);
@@ -547,7 +547,7 @@ export default function FranceMap() {
                 transition: "color 0.2s",
               }}
             >
-              {tech.name}
+              {tech.zone}
             </span>
           </button>
         ))}

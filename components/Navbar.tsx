@@ -84,14 +84,22 @@ export default function Navbar() {
             background: "none",
             border: "none",
             cursor: "pointer",
-            fontFamily: "var(--font-display)",
-            fontSize: "1.4rem",
-            fontWeight: 800,
-            letterSpacing: "0.08em",
-            color: "#f5f5f5",
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          ACE<span style={{ color: "#e63946" }}>PROG</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="ACE PROG"
+            style={{
+              height: scrolled ? "36px" : "44px",
+              width: "auto",
+              transition: "height 0.3s ease",
+              objectFit: "contain",
+            }}
+          />
         </button>
 
         {/* Desktop nav */}

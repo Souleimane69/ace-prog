@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -27,87 +26,23 @@ const steps = [
   },
 ];
 
-const tools = [
-  { name: "KESS V3 / KTAG", level: 95 },
-  { name: "MPPS / PCMflash", level: 88 },
-  { name: "WinOLS / TunerPro", level: 90 },
-  { name: "Diagnostic multimarques", level: 92 },
-  { name: "Oscilloscope Auto", level: 80 },
+const equipmentHighlights = [
+  {
+    icon: "⚡",
+    title: "Matériel de pointe",
+    desc: "Nous investissons continuellement dans les équipements les plus récents et les plus performants du marché.",
+  },
+  {
+    icon: "🏆",
+    title: "Mieux équipés du secteur",
+    desc: "Notre parc d'équipements nous place parmi les prestataires les mieux dotés en France pour la reprogrammation automobile.",
+  },
+  {
+    icon: "🔬",
+    title: "Technologies innovantes",
+    desc: "Nous utilisons des solutions de dernière génération pour garantir précision, fiabilité et résultats optimaux sur chaque intervention.",
+  },
 ];
-
-function ToolBar({ name, level, delay }: { name: string; level: number; delay: number }) {
-  const barRef = useRef<HTMLDivElement>(null);
-  const animated = useRef(false);
-
-  useEffect(() => {
-    const el = barRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated.current) {
-          animated.current = true;
-          setTimeout(() => {
-            if (el) el.style.width = `${level}%`;
-          }, delay * 1000);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el.parentElement!);
-    return () => observer.disconnect();
-  }, [level, delay]);
-
-  return (
-    <div style={{ marginBottom: "1.25rem" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "0.4rem",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.9rem",
-            color: "#f5f5f5",
-            fontWeight: 600,
-          }}
-        >
-          {name}
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "0.75rem",
-            color: "#e63946",
-          }}
-        >
-          {level}%
-        </span>
-      </div>
-      <div
-        style={{
-          height: "4px",
-          background: "#2C303A",
-          borderRadius: "2px",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          ref={barRef}
-          style={{
-            height: "100%",
-            width: "0%",
-            background: "linear-gradient(to right, #e63946, #c0392b)",
-            borderRadius: "2px",
-            transition: "width 1s ease",
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export default function Expertise() {
   return (
@@ -228,7 +163,7 @@ export default function Expertise() {
           </div>
         </motion.div>
 
-        {/* Tools */}
+        {/* Equipment highlights */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -239,6 +174,9 @@ export default function Expertise() {
             border: "1px solid #3D4250",
             borderRadius: "8px",
             padding: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.75rem",
           }}
         >
           <h3
@@ -249,52 +187,49 @@ export default function Expertise() {
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               color: "#a0a0a0",
-              marginBottom: "2rem",
+              marginBottom: "0.25rem",
             }}
           >
-            Outils &amp; Technologies
+            Notre équipement
           </h3>
 
-          {tools.map((tool, i) => (
-            <ToolBar
-              key={tool.name}
-              name={tool.name}
-              level={tool.level}
-              delay={i * 0.1}
-            />
-          ))}
-
-          {/* Tech badges */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "0.75rem",
-              marginTop: "2rem",
-              paddingTop: "1.5rem",
-              borderTop: "1px solid #2C303A",
-            }}
-          >
-            {["OBD2", "CAN Bus", "ECU", "K-Line", "ISO 15765", "UDS"].map(
-              (badge) => (
-                <span
-                  key={badge}
+          {equipmentHighlights.map((item) => (
+            <div key={item.title} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+              <span style={{ fontSize: "1.6rem", flexShrink: 0, marginTop: "0.1rem" }}>{item.icon}</span>
+              <div>
+                <p
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: "0.65rem",
+                    fontSize: "0.95rem",
                     fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    color: "#e63946",
-                    background: "rgba(230,57,70,0.08)",
-                    border: "1px solid rgba(230,57,70,0.3)",
-                    padding: "0.3rem 0.75rem",
-                    borderRadius: "3px",
+                    color: "#f5f5f5",
+                    marginBottom: "0.4rem",
                   }}
                 >
-                  {badge}
-                </span>
-              )
-            )}
+                  {item.title}
+                </p>
+                <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "#a0a0a0", lineHeight: 1.65 }}>
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {/* Ligne décorative */}
+          <div
+            style={{
+              marginTop: "0.5rem",
+              paddingTop: "1.5rem",
+              borderTop: "1px solid #2C303A",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "#e63946",
+            }}
+          >
+            Expert électronique automobile — Toute la France
           </div>
         </motion.div>
       </div>

@@ -13,6 +13,7 @@ interface Post {
   excerpt: string;
   contentMd: string;
   content: string;
+  featured?: boolean;
 }
 
 type View = "list" | "create" | "edit";
@@ -262,6 +263,18 @@ function AdminView({ token, onLogout }: { token: string; onLogout: () => void })
     loadPosts();
   };
 
+  const handleToggleFeatured = async (slug: string, currentlyFeatured: boolean) => {
+    await fetch(`/api/posts/${slug}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ featured: !currentlyFeatured }),
+    });
+    loadPosts();
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#16181D" }}>
       {/* Header */}
@@ -321,6 +334,7 @@ function AdminView({ token, onLogout }: { token: string; onLogout: () => void })
             onNew={openCreate}
             onEdit={openEdit}
             onDelete={handleDelete}
+            onToggleFeatured={handleToggleFeatured}
           />
         )}
         {(view === "create" || view === "edit") && (
@@ -344,12 +358,14 @@ function PostList({
   onNew,
   onEdit,
   onDelete,
+  onToggleFeatured,
 }: {
   posts: Post[];
   loadError: string;
   onNew: () => void;
   onEdit: (p: Post) => void;
   onDelete: (slug: string, title: string) => void;
+  onToggleFeatured: (slug: string, currentlyFeatured: boolean) => void;
 }) {
   const fmt = (iso: string) =>
     new Date(iso).toLocaleDateString("fr-FR", {
@@ -449,7 +465,27 @@ function PostList({
             >
               {post.title}
             </span>
-            <div style={{ display: "flex", gap: "0.5rem", marginLeft: "auto" }}>
+            <div style={{ display: "flex", gap: "0.5rem", marginLeft: "auto", flexWrap: "wrap" }}>
+              <button
+                onClick={() => onToggleFeatured(post.slug, !!post.featured)}
+                title={post.featured ? "Retirer de la une" : "Mettre à la une"}
+                style={{
+                  background: post.featured ? "rgba(230,57,70,0.15)" : "transparent",
+                  color: post.featured ? "#e63946" : "#777b88",
+                  border: `1px solid ${post.featured ? "#e63946" : "#3D4250"}`,
+                  cursor: "pointer",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  padding: "0.4rem 0.9rem",
+                  borderRadius: "4px",
+                  transition: "all 0.2s",
+                }}
+              >
+                {post.featured ? "★ À la une" : "☆ À la une"}
+              </button>
               <button
                 onClick={() => onEdit(post)}
                 style={{

@@ -177,9 +177,8 @@ export default function Hero() {
             lineHeight: 1.7,
           }}
         >
-          Expert en reprogrammation ECU et électronique automobile en
-          Auvergne-Rhône-Alpes. Chaque paramètre analysé, optimisé et calibré
-          avec rigueur.
+          Expert en reprogrammation ECU et électronique automobile partout en
+          France. Chaque paramètre analysé, optimisé et calibré avec rigueur.
         </motion.p>
 
         <motion.div

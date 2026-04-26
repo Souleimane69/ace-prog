@@ -10,6 +10,7 @@ export interface Post {
   excerpt: string;
   contentMd: string; // markdown source (for the admin editor)
   content: string;   // rendered HTML (for display)
+  featured?: boolean;
 }
 
 const DATA_PATH = path.join(process.cwd(), "data", "posts.json");

@@ -47,17 +47,17 @@ const contactInfoItems = [
   {
     icon: "📍",
     label: "Zone d'intervention",
-    value: "Auvergne-Rhône-Alpes",
+    value: "Toute la France",
   },
   {
     icon: "📞",
     label: "Téléphone",
-    value: "À compléter", // TODO: replace with real phone
+    value: "06 58 22 02 24",
   },
   {
     icon: "✉",
     label: "Email",
-    value: "contact@aceprog.fr", // TODO: replace with real email
+    value: "contact@aceprog.com",
   },
   {
     icon: "🕐",
