@@ -97,6 +97,17 @@ h1, h2, h3, h4, h5, h6 {
 .post-content a:hover { color: #f5a0a5; }
 
 /* ─── Mobile responsive ───────────────────────────────────────────────────── */
+/* ─── Hero grid responsive ───────────────────────────────────────────────── */
+.hero-grid {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 @media (max-width: 640px) {
   /* Sections padding réduit */
   #apropos,

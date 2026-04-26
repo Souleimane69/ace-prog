@@ -9,7 +9,6 @@ const links = [
   { href: "#services", label: "Services" },
   { href: "#expertise", label: "Expertise" },
   { href: "#benefices", label: "Bénéfices" },
-  { href: "#nlink", label: "N.LINK" },
   { href: "#actualites", label: "Actualités" },
   { href: "#contact", label: "Contact" },
 ];
