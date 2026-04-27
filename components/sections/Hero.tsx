@@ -129,10 +129,10 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
           width: "100%",
           display: "grid",
           gridTemplateColumns: featuredPost ? "1fr 1fr" : "1fr",
-          gap: "4rem",
+          gap: "3rem",
           alignItems: "center",
         }}
-        className={featuredPost ? "hero-grid" : ""}
+        className={`hero-content${featuredPost ? " hero-grid" : ""}`}
       >
         {/* Colonne gauche : article à la une */}
         {featuredPost && (

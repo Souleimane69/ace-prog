@@ -366,13 +366,12 @@ export default function Services() {
 
         {/* Tabs */}
         <div
+          className="services-tabs"
           style={{
             display: "flex",
-            gap: "0.5rem",
-            flexWrap: "wrap",
+            gap: "0",
             marginBottom: "2.5rem",
             borderBottom: "1px solid #3D4250",
-            paddingBottom: "0",
           }}
         >
           {tabs.map((tab) => (
@@ -385,11 +384,12 @@ export default function Services() {
                 border: "none",
                 cursor: "pointer",
                 fontFamily: "var(--font-display)",
-                fontSize: "0.7rem",
+                fontSize: "0.65rem",
                 fontWeight: 700,
-                letterSpacing: "0.1em",
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                padding: "0.85rem 1.5rem",
+                padding: "0.85rem 1rem",
+                whiteSpace: "nowrap",
                 color: activeTab === tab.id ? "#e63946" : "#a0a0a0",
                 borderBottom: activeTab === tab.id ? "2px solid #e63946" : "2px solid transparent",
                 marginBottom: "-1px",

@@ -567,6 +567,7 @@ export default function NLinkContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              className="nlink-cta-btns"
               style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
             >
               <a

@@ -138,9 +138,9 @@ export default function Contact() {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr",
-          gap: "4rem",
+          gap: "3rem",
         }}
-        className="lg:grid-cols-2"
+        className="contact-grid lg:grid-cols-2"
       >
         {/* Info */}
         <motion.div

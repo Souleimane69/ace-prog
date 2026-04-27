@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Palette Ace Prog — gris anthracite */
   --color-bg: #16181D;
   --color-bg-alt: #111318;
   --color-surface-1: #22252E;
@@ -47,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
-/* ─── Carte article (liste actualités) ───────────────────────────────────── */
+/* ─── Carte article ──────────────────────────────────────────────────────────── */
 .news-row {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -56,16 +55,14 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 24px rgba(230, 57, 70, 0.1);
 }
 
-/* ─── Contenu articles de blog ────────────────────────────────────────────── */
+/* ─── Articles de blog ───────────────────────────────────────────────────────── */
 .post-content {
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.8;
   color: #b0b4c0;
 }
-
 .post-content p { margin: 0 0 1.25rem; }
-
 .post-content h3 {
   font-family: var(--font-display);
   font-size: 1.15rem;
@@ -73,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #f0f1f5;
   margin: 2rem 0 0.75rem;
 }
-
 .post-content ul {
   padding-left: 1.25rem;
   margin: 0 0 1.25rem;
@@ -81,56 +77,59 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 0.4rem;
 }
-
 .post-content ul li::marker { color: #e63946; }
-
 .post-content strong { color: #f0f1f5; font-weight: 600; }
-
 .post-content em { color: #d0d4de; }
-
-.post-content a {
-  color: #e63946;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
+.post-content a { color: #e63946; text-decoration: underline; text-underline-offset: 3px; }
 .post-content a:hover { color: #f5a0a5; }
 
-/* ─── Mobile responsive ───────────────────────────────────────────────────── */
-/* ─── Hero grid responsive ───────────────────────────────────────────────── */
+/* ─── Hero grid ──────────────────────────────────────────────────────────────── */
 .hero-grid {
   grid-template-columns: 1fr 1fr !important;
 }
-
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr !important;
   }
 }
 
+/* ─── Tabs services scrollables sur mobile ───────────────────────────────────── */
+.services-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-wrap: nowrap !important;
+  padding-bottom: 0;
+}
+.services-tabs::-webkit-scrollbar { display: none; }
+
+/* ─── Mobile (≤ 640px) ───────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
+
   /* Sections padding réduit */
-  #apropos,
-  #services,
-  #expertise,
-  #benefices,
-  #actualites,
-  #contact {
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
+  section {
     padding-left: 1.25rem !important;
     padding-right: 1.25rem !important;
   }
 
-  /* Hero content */
+  #apropos,
+  #services,
+  #actualites,
+  #contact {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /* Hero */
   .hero-content {
     padding-top: 5.5rem !important;
     padding-bottom: 3rem !important;
     padding-left: 1.25rem !important;
     padding-right: 1.25rem !important;
+    gap: 2.5rem !important;
   }
 
-  /* Boutons Hero en colonne pleine largeur */
+  /* Boutons Hero pleine largeur */
   .hero-buttons {
     flex-direction: column !important;
   }
@@ -138,16 +137,79 @@ h1, h2, h3, h4, h5, h6 {
     width: 100% !important;
     text-align: center !important;
     justify-content: center !important;
+    padding: 0.9rem 1rem !important;
   }
 
-  /* Stats Hero resserrées */
+  /* Stats Hero */
   .hero-stats {
     gap: 1.5rem !important;
+    flex-wrap: wrap !important;
+  }
+  .hero-stats > div {
+    min-width: calc(33% - 1rem);
   }
 
-  /* Navbar padding réduit */
+  /* Navbar */
   header {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
+  }
+
+  /* Titres sections */
+  h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem) !important;
+  }
+
+  /* Cartes services */
+  .service-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Formulaire contact */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Tous les boutons CTA : hauteur minimum pour faciliter le tap */
+  button, a[href] {
+    min-height: 44px;
+  }
+
+  /* Ticker moins de padding */
+  .ticker-track span {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  /* NLink CTA buttons full width */
+  .nlink-cta-btns {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .nlink-cta-btns a {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* Actualités page */
+  .actualites-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── Tablette (641px – 1024px) ──────────────────────────────────────────────── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  #apropos,
+  #services,
+  #actualites,
+  #contact {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+
+  .hero-content {
+    padding-top: 7rem !important;
+    gap: 3rem !important;
   }
 }
