@@ -1,6 +1,6 @@
 "use client";
 
-import CircuitCanvas from "@/components/CircuitCanvas";
+import ParticleCanvas from "@/components/ParticleCanvas";
 
 export default function GlobalBackground() {
   return (
@@ -14,7 +14,7 @@ export default function GlobalBackground() {
       }}
       aria-hidden="true"
     >
-      <CircuitCanvas />
+      <ParticleCanvas />
     </div>
   );
 }
