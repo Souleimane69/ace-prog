@@ -7,9 +7,18 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Actualités — Ace Prog",
+  title: "Actualités & Conseils Reprogrammation Moteur | Ace Prog",
   description:
-    "Conseils, actualités et informations sur la reprogrammation moteur et l'électronique automobile par Ace Prog.",
+    "Blog Ace Prog : conseils d'experts, guides pratiques et actualités sur la reprogrammation moteur ECU, le Stage 1/2/3, la conversion E85 et l'électronique automobile.",
+  alternates: {
+    canonical: "https://aceprog.com/actualites",
+  },
+  openGraph: {
+    url: "https://aceprog.com/actualites",
+    title: "Actualités & Conseils Reprogrammation Moteur | Ace Prog",
+    description:
+      "Guides, conseils et actualités sur la reprogrammation moteur, le diagnostic ECU et la conversion E85 par Ace Prog.",
+  },
 };
 
 function formatDate(iso: string) {

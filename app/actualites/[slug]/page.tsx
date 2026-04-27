@@ -20,8 +20,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost(slug);
   if (!post) return {};
   return {
-    title: `${post.title} — Ace Prog`,
+    title: `${post.title} | Ace Prog`,
     description: post.excerpt,
+    keywords: [post.category, "ace prog", "reprogrammation moteur", post.title],
+    alternates: {
+      canonical: `https://aceprog.com/actualites/${slug}`,
+    },
+    openGraph: {
+      type: "article",
+      url: `https://aceprog.com/actualites/${slug}`,
+      title: `${post.title} | Ace Prog`,
+      description: post.excerpt,
+      publishedTime: post.date,
+      authors: ["Ace Prog"],
+      tags: [post.category, "reprogrammation moteur", "ace prog"],
+    },
   };
 }
 
