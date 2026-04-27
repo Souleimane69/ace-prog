@@ -142,7 +142,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav style={{ display: "flex", gap: "1.75rem", alignItems: "center" }} className="hidden md:flex">
-          {mainLinks.slice(0, 1).map((l) => (
+          {mainLinks.slice(0, 2).map((l) => (
             <NavButton
               key={l.href}
               label={l.label}
@@ -249,7 +249,7 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          {mainLinks.slice(1).map((l) => (
+          {mainLinks.slice(2).map((l) => (
             <NavButton
               key={l.href}
               label={l.label}
@@ -349,7 +349,7 @@ export default function Navbar() {
               gap: "0",
             }}
           >
-            {mainLinks.slice(0, 1).map((l) => (
+            {mainLinks.slice(0, 2).map((l) => (
               <MobileNavButton
                 key={l.href}
                 label={l.label}
@@ -431,7 +431,7 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {mainLinks.slice(1).map((l) => (
+            {mainLinks.slice(2).map((l) => (
               <MobileNavButton
                 key={l.href}
                 label={l.label}
