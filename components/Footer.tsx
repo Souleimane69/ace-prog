@@ -10,17 +10,12 @@ export default function Footer() {
       }}
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        <p
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.2rem",
-            fontWeight: 800,
-            letterSpacing: "0.08em",
-            marginBottom: "0.5rem",
-          }}
-        >
-          ACE<span style={{ color: "#e63946" }}>PROG</span>
-        </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-blanc.png"
+          alt="Ace Prog"
+          style={{ height: "48px", width: "auto", objectFit: "contain", marginBottom: "0.75rem" }}
+        />
         <p style={{ color: "#666", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
           Reprogrammation Moteur &amp; Électronique Automobile — Auvergne-Rhône-Alpes
         </p>
