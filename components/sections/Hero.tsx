@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ParticleCanvas from "@/components/ParticleCanvas";
+import CircuitCanvas from "@/components/CircuitCanvas";
 import type { Post } from "@/lib/posts";
 
 interface StatItem {
@@ -115,7 +115,7 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
 
       {/* Particle canvas */}
       <div style={{ position: "absolute", inset: 0, zIndex: 2 }}>
-        <ParticleCanvas />
+        <CircuitCanvas />
       </div>
 
       {/* Content */}
