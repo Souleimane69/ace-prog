@@ -1,9 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
+import Ticker from "@/components/Ticker";
 import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
-import Expertise from "@/components/sections/Expertise";
-import Benefits from "@/components/sections/Benefits";
 import Actualites from "@/components/sections/Actualites";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
@@ -17,10 +16,9 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero featuredPost={featuredPost} />
+        <Ticker />
         <About />
         <Services />
-        <Expertise />
-        <Benefits />
         <Actualites posts={posts} />
         <Contact />
       </main>

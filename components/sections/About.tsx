@@ -23,7 +23,7 @@ export default function About() {
       }}
     >
       <SectionHeader
-        tag="À Propos"
+        tag="Qui Sommes-Nous ?"
         title="L'Alliance entre Ingénierie et Performance"
       />
 
@@ -119,14 +119,44 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            background: "#22252E",
-            border: "1px solid #3D4250",
-            borderRadius: "8px",
-            padding: "2rem",
-          }}
         >
-          <FranceMap />
+          <div
+            style={{
+              background: "rgba(230,57,70,0.06)",
+              border: "1px solid rgba(230,57,70,0.2)",
+              borderRadius: "6px",
+              padding: "0.75rem 1.25rem",
+              marginBottom: "1rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span style={{ color: "#e63946", fontSize: "1rem" }}>🚗</span>
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#f0f1f5",
+                margin: 0,
+              }}
+            >
+              Tous nos services sont disponibles en itinérance dans vos ateliers
+            </p>
+          </div>
+          <div
+            style={{
+              background: "#22252E",
+              border: "1px solid #3D4250",
+              borderRadius: "8px",
+              padding: "2rem",
+            }}
+          >
+            <FranceMap />
+          </div>
         </motion.div>
       </div>
     </section>

@@ -77,6 +77,8 @@ export default function Contact() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const validate = (): boolean => {
     const e: Errors = {};
@@ -89,14 +91,27 @@ export default function Contact() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (ev: FormEvent) => {
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
-    // TODO: wire up to EmailJS / Resend / backend
-    setSuccess(true);
-    setForm({ nom: "", tel: "", email: "", vehicule: "", service: "", message: "" });
-    setErrors({});
-    setTimeout(() => setSuccess(false), 6000);
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      setSuccess(true);
+      setForm({ nom: "", tel: "", email: "", vehicule: "", service: "", message: "" });
+      setErrors({});
+      setTimeout(() => setSuccess(false), 6000);
+    } catch {
+      setSubmitError("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -328,11 +343,12 @@ export default function Contact() {
           {/* Submit */}
           <button
             type="submit"
+            disabled={submitting}
             style={{
-              background: "#e63946",
+              background: submitting ? "#8a1e27" : "#e63946",
               color: "#fff",
               border: "none",
-              cursor: "pointer",
+              cursor: submitting ? "not-allowed" : "pointer",
               fontFamily: "var(--font-display)",
               fontSize: "0.75rem",
               fontWeight: 700,
@@ -341,19 +357,30 @@ export default function Contact() {
               padding: "1.1rem",
               borderRadius: "4px",
               transition: "background 0.2s, box-shadow 0.2s",
+              opacity: submitting ? 0.7 : 1,
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#c0392b";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                "0 0 30px rgba(230,57,70,0.4)";
+              if (!submitting) {
+                (e.currentTarget as HTMLButtonElement).style.background = "#c0392b";
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 0 30px rgba(230,57,70,0.4)";
+              }
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#e63946";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
+              if (!submitting) {
+                (e.currentTarget as HTMLButtonElement).style.background = "#e63946";
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
+              }
             }}
           >
-            Envoyer la demande
+            {submitting ? "Envoi en cours…" : "Envoyer la demande"}
           </button>
+
+          {submitError && (
+            <p style={{ color: "#e63946", fontSize: "0.9rem", fontFamily: "var(--font-body)" }}>
+              {submitError}
+            </p>
+          )}
 
           {/* Success */}
           {success && (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Orbitron, Rajdhani } from "next/font/google";
 import "./globals.css";
+import GlobalBackground from "@/components/GlobalBackground";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -30,7 +31,10 @@ export default function RootLayout({
       lang="fr"
       className={`${orbitron.variable} ${rajdhani.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <GlobalBackground />
+        {children}
+      </body>
     </html>
   );
 }
