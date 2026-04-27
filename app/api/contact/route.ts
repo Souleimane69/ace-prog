@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
   const { error } = await resend.emails.send({
     from: "ACE Prog <onboarding@resend.dev>",
-    to: "contact@aceprog.com",
+    to: "souleimanehadbi@gmail.com",
     replyTo: email,
     subject: `Nouvelle demande de devis – ${nom}`,
     html: `
@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
   });
 
   if (error) {
-    console.error("Resend error:", error);
-    return NextResponse.json({ error: "Erreur lors de l'envoi." }, { status: 500 });
+    console.error("Resend error:", JSON.stringify(error));
+    return NextResponse.json({ error: "Erreur lors de l'envoi.", detail: error }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
