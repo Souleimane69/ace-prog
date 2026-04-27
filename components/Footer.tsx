@@ -14,7 +14,7 @@ export default function Footer() {
         <img
           src="/logo-blanc.png"
           alt="Ace Prog"
-          style={{ height: "48px", width: "auto", objectFit: "contain", marginBottom: "0.75rem" }}
+          style={{ height: "48px", width: "auto", objectFit: "contain", display: "block", margin: "0 auto 0.75rem" }}
         />
         <p style={{ color: "#666", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
           Reprogrammation Moteur &amp; Électronique Automobile — Auvergne-Rhône-Alpes
