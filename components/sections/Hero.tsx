@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import ParticleCanvas from "@/components/ParticleCanvas";
 import type { Post } from "@/lib/posts";
 
 interface StatItem {
@@ -112,11 +113,16 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
         }}
       />
 
+      {/* Particle canvas */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 2 }}>
+        <ParticleCanvas />
+      </div>
+
       {/* Content */}
       <div
         style={{
           position: "relative",
-          zIndex: 2,
+          zIndex: 3,
           maxWidth: "1400px",
           margin: "0 auto",
           padding: "8rem 2rem 4rem",
