@@ -564,14 +564,18 @@ function PostForm({
         },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
       if (!res.ok) {
-        setError(data.error || "Erreur lors de l'enregistrement");
+        let msg = "Erreur lors de l'enregistrement";
+        try {
+          const data = await res.json();
+          msg = data.error || msg;
+        } catch { /* réponse non-JSON */ }
+        setError(msg);
       } else {
         onSaved();
       }
     } catch {
-      setError("Erreur réseau");
+      setError("Erreur réseau — le serveur est inaccessible.");
     } finally {
       setSaving(false);
     }

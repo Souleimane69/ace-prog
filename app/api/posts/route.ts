@@ -42,7 +42,15 @@ export async function POST(req: NextRequest) {
     content: markdownToHtml(contentMd.trim()),
   };
 
-  savePosts([newPost, ...posts]);
+  try {
+    savePosts([newPost, ...posts]);
+  } catch (err) {
+    console.error("savePosts failed:", err);
+    return NextResponse.json(
+      { error: "Impossible d'écrire le fichier de données. Vérifiez les permissions du serveur." },
+      { status: 500 }
+    );
+  }
 
   revalidatePath("/");
   revalidatePath("/actualites");
