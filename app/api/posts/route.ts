@@ -46,9 +46,15 @@ export async function POST(req: NextRequest) {
     await savePosts([newPost, ...posts]);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("savePosts failed:", msg);
+    const vars = {
+      UPSTASH_URL: !!process.env.UPSTASH_REDIS_REST_URL,
+      UPSTASH_TOKEN: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+      KV_URL: !!process.env.KV_REST_API_URL,
+      KV_TOKEN: !!process.env.KV_REST_API_TOKEN,
+    };
+    console.error("savePosts failed:", msg, "env vars:", vars);
     return NextResponse.json(
-      { error: `Erreur stockage : ${msg}` },
+      { error: `Erreur stockage : ${msg} | vars: ${JSON.stringify(vars)}` },
       { status: 500 }
     );
   }
