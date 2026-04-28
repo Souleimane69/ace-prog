@@ -8,7 +8,7 @@ function authorized(req: NextRequest) {
 }
 
 export async function GET() {
-  return NextResponse.json(getPosts());
+  return NextResponse.json(await getPosts());
 }
 
 export async function POST(req: NextRequest) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Tous les champs sont obligatoires" }, { status: 400 });
   }
 
-  const posts = getPosts();
+  const posts = await getPosts();
   const slug = slugify(title);
 
   if (posts.find((p) => p.slug === slug)) {
@@ -43,11 +43,11 @@ export async function POST(req: NextRequest) {
   };
 
   try {
-    savePosts([newPost, ...posts]);
+    await savePosts([newPost, ...posts]);
   } catch (err) {
     console.error("savePosts failed:", err);
     return NextResponse.json(
-      { error: "Impossible d'écrire le fichier de données. Vérifiez les permissions du serveur." },
+      { error: "Impossible d'enregistrer l'article. Vérifiez la configuration du stockage." },
       { status: 500 }
     );
   }

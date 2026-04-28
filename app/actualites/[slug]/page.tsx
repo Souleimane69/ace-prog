@@ -12,12 +12,12 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return getPosts().map((p) => ({ slug: p.slug }));
+  return (await getPosts()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) return {};
   return {
     title: `${post.title} | Ace Prog`,
@@ -48,7 +48,7 @@ function formatDate(iso: string) {
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) notFound();
 
   return (

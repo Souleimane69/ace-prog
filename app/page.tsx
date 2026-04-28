@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  const posts = getPosts();
+export default async function Home() {
+  const posts = await getPosts();
   const featuredPost = posts.find((p) => p.featured) ?? null;
   return (
     <>

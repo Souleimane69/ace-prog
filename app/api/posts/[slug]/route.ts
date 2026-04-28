@@ -19,7 +19,7 @@ export async function PUT(req: NextRequest, { params }: Props) {
   const { slug } = await params;
   const { title, category, excerpt, contentMd, date, featured } = await req.json();
 
-  const posts = getPosts();
+  const posts = await getPosts();
   const idx = posts.findIndex((p) => p.slug === slug);
   if (idx === -1) {
     return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
@@ -36,7 +36,7 @@ export async function PUT(req: NextRequest, { params }: Props) {
     ...(featured !== undefined && { featured: !!featured }),
   };
 
-  savePosts(posts);
+  await savePosts(posts);
 
   revalidatePath("/");
   revalidatePath("/actualites");
@@ -53,19 +53,18 @@ export async function PATCH(req: NextRequest, { params }: Props) {
   const { slug } = await params;
   const { featured } = await req.json();
 
-  const posts = getPosts();
+  const posts = await getPosts();
   const idx = posts.findIndex((p) => p.slug === slug);
   if (idx === -1) {
     return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
   }
 
-  // Un seul article à la une à la fois
   const updated = posts.map((p, i) => ({
     ...p,
     featured: i === idx ? !!featured : false,
   }));
 
-  savePosts(updated);
+  await savePosts(updated);
 
   revalidatePath("/");
   revalidatePath("/actualites");
@@ -79,14 +78,14 @@ export async function DELETE(req: NextRequest, { params }: Props) {
   }
 
   const { slug } = await params;
-  const posts = getPosts();
+  const posts = await getPosts();
   const filtered = posts.filter((p) => p.slug !== slug);
 
   if (filtered.length === posts.length) {
     return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
   }
 
-  savePosts(filtered);
+  await savePosts(filtered);
 
   revalidatePath("/");
   revalidatePath("/actualites");

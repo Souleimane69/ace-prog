@@ -3,8 +3,8 @@ import { getPosts } from "@/lib/posts";
 
 const SITE_URL = "https://aceprog.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getPosts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getPosts();
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/actualites/${post.slug}`,

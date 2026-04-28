@@ -29,8 +29,8 @@ function formatDate(iso: string) {
   });
 }
 
-export default function ActualitesPage() {
-  const posts = getPosts();
+export default async function ActualitesPage() {
+  const posts = await getPosts();
 
   return (
     <>
