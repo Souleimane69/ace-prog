@@ -83,11 +83,13 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 }
 
 export async function savePosts(posts: Post[]): Promise<void> {
-  if (getKvConfig()) {
-    await kvSet(KV_KEY, posts);
-    return;
+  const cfg = getKvConfig();
+  const diag = `cfg=${cfg ? "ok" : "null"} KV_URL=${!!process.env["KV_REST_API_URL"]} KV_TOKEN=${!!process.env["KV_REST_API_TOKEN"]} UPSTASH_URL=${!!process.env["UPSTASH_REDIS_REST_URL"]}`;
+  console.log("[savePosts]", diag);
+  if (!cfg) {
+    throw new Error(`KV non configuré sur Vercel. ${diag}`);
   }
-  fs.writeFileSync(DATA_PATH, JSON.stringify(posts, null, 2), "utf-8");
+  await kvSet(KV_KEY, posts);
 }
 
 export { markdownToHtml, slugify };
