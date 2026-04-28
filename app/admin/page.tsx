@@ -184,6 +184,25 @@ function LoginView({ onLogin }: { onLogin: (token: string) => void }) {
           Espace administration
         </p>
 
+        <a
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            fontFamily: "var(--font-display)",
+            fontSize: "0.65rem",
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#777b88",
+            textDecoration: "none",
+            marginBottom: "2rem",
+          }}
+        >
+          ← Retour au site
+        </a>
+
         <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div>
             <label style={S.label}>Mot de passe</label>
