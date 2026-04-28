@@ -16,22 +16,17 @@ export interface Post {
 const DATA_PATH = path.join(process.cwd(), "data", "posts.json");
 const KV_KEY = "ace_posts";
 
-function getKvConfig() {
-  const url =
-    process.env["UPSTASH_REDIS_REST_URL"] ??
-    process.env["KV_REST_API_URL"];
-  const token =
-    process.env["UPSTASH_REDIS_REST_TOKEN"] ??
-    process.env["KV_REST_API_TOKEN"];
-  if (url && token) return { url, token };
-  return null;
+function readFile(): Post[] {
+  try {
+    return JSON.parse(fs.readFileSync(DATA_PATH, "utf-8")) as Post[];
+  } catch {
+    return [];
+  }
 }
 
-async function kvGet(key: string): Promise<Post[] | null> {
-  const cfg = getKvConfig();
-  if (!cfg) return null;
-  const res = await fetch(`${cfg.url}/get/${key}`, {
-    headers: { Authorization: `Bearer ${cfg.token}` },
+async function kvGet(url: string, token: string, key: string): Promise<Post[] | null> {
+  const res = await fetch(`${url}/get/${key}`, {
+    headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
   const json = await res.json();
@@ -40,13 +35,11 @@ async function kvGet(key: string): Promise<Post[] | null> {
   return value as Post[];
 }
 
-async function kvSet(key: string, value: Post[]): Promise<void> {
-  const cfg = getKvConfig();
-  if (!cfg) throw new Error("KV non configuré");
-  const res = await fetch(`${cfg.url}/set/${key}`, {
+async function kvSet(url: string, token: string, key: string, value: Post[]): Promise<void> {
+  const res = await fetch(`${url}/set/${key}`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${cfg.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(JSON.stringify(value)),
@@ -57,20 +50,14 @@ async function kvSet(key: string, value: Post[]): Promise<void> {
   }
 }
 
-function readFile(): Post[] {
-  try {
-    return JSON.parse(fs.readFileSync(DATA_PATH, "utf-8")) as Post[];
-  } catch {
-    return [];
-  }
-}
-
 export async function getPosts(): Promise<Post[]> {
-  if (getKvConfig()) {
-    const stored = await kvGet(KV_KEY);
+  const url = process.env["KV_REST_API_URL"] ?? process.env["UPSTASH_REDIS_REST_URL"];
+  const token = process.env["KV_REST_API_TOKEN"] ?? process.env["UPSTASH_REDIS_REST_TOKEN"];
+  if (url && token) {
+    const stored = await kvGet(url, token, KV_KEY);
     if (stored === null) {
       const seeded = readFile();
-      if (seeded.length > 0) await kvSet(KV_KEY, seeded);
+      if (seeded.length > 0) await kvSet(url, token, KV_KEY, seeded);
       return seeded;
     }
     return stored;
@@ -83,13 +70,13 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 }
 
 export async function savePosts(posts: Post[]): Promise<void> {
-  const cfg = getKvConfig();
-  const diag = `cfg=${cfg ? "ok" : "null"} KV_URL=${!!process.env["KV_REST_API_URL"]} KV_TOKEN=${!!process.env["KV_REST_API_TOKEN"]} UPSTASH_URL=${!!process.env["UPSTASH_REDIS_REST_URL"]}`;
-  console.log("[savePosts]", diag);
-  if (!cfg) {
-    throw new Error(`KV non configuré sur Vercel. ${diag}`);
+  const url = process.env["KV_REST_API_URL"] ?? process.env["UPSTASH_REDIS_REST_URL"];
+  const token = process.env["KV_REST_API_TOKEN"] ?? process.env["UPSTASH_REDIS_REST_TOKEN"];
+  if (url && token) {
+    await kvSet(url, token, KV_KEY, posts);
+    return;
   }
-  await kvSet(KV_KEY, posts);
+  fs.writeFileSync(DATA_PATH, JSON.stringify(posts, null, 2), "utf-8");
 }
 
 export { markdownToHtml, slugify };
