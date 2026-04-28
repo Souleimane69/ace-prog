@@ -5,12 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Link from "next/link";
 
-type Tab = "optimisation" | "reparation" | "cles" | "nlink";
+type Tab = "optimisation" | "reparation" | "cles" | "confort" | "nlink";
 
 const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: "optimisation", label: "Optimisation", icon: "📈" },
   { id: "reparation", label: "Réparation / Clonage", icon: "🔧" },
   { id: "cles", label: "Clés", icon: "🔑" },
+  { id: "confort", label: "Confort", icon: "🖥️" },
   { id: "nlink", label: "N.LINK", icon: "📡" },
 ];
 
@@ -163,6 +164,41 @@ const tabContent: Record<Tab, React.ReactNode> = {
           lors de l&apos;intervention.
         </p>
       </div>
+    </div>
+  ),
+
+  confort: (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+        gap: "1.5rem",
+      }}
+    >
+      {[
+        {
+          tag: "Virtual Cockpit",
+          title: "Installation Virtual Cockpit",
+          desc: "Installation et adaptation de Virtual Cockpit sur véhicules VAG et Renault. Codage, paramétrage, compatibilité et mise en service assurés pour une intégration parfaite aux fonctions d'origine du véhicule.",
+        },
+        {
+          tag: "CarPlay",
+          title: "Activation CarPlay / Android Auto",
+          desc: "Activation CarPlay et Android Auto sur véhicules VAG, BMW, Renault et Mercedes-Benz. Intégration native avec le système multimédia d'origine, sans boîtier externe.",
+        },
+        {
+          tag: "Appel SOS",
+          title: "Solution Appel SOS Renault",
+          desc: "Diagnostic, réparation et remise en service du module Appel SOS Renault. Ce dispositif d'assistance embarqué permet de contacter automatiquement les secours en cas d'accident ou d'urgence.",
+        },
+        {
+          tag: "Options cachées",
+          title: "Activation d'Options Cachées",
+          desc: "Déblocage de fonctionnalités présentes d'origine dans le véhicule mais non activées en sortie d'usine. Selon compatibilité : confort, éclairage, aides à la conduite, multimédia et personnalisations diverses.",
+        },
+      ].map((item) => (
+        <ServiceItem key={item.tag} tag={item.tag} title={item.title} desc={item.desc} />
+      ))}
     </div>
   ),
 
