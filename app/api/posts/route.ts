@@ -45,9 +45,10 @@ export async function POST(req: NextRequest) {
   try {
     await savePosts([newPost, ...posts]);
   } catch (err) {
-    console.error("savePosts failed:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("savePosts failed:", msg);
     return NextResponse.json(
-      { error: "Impossible d'enregistrer l'article. Vérifiez la configuration du stockage." },
+      { error: `Erreur stockage : ${msg}` },
       { status: 500 }
     );
   }

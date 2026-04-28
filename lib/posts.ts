@@ -16,8 +16,12 @@ export interface Post {
 const DATA_PATH = path.join(process.cwd(), "data", "posts.json");
 const KV_KEY = "ace_posts";
 
-function kvConfigured() {
-  return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+function getRedisConfig() {
+  // Vercel Marketplace Upstash integration
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  if (url && token) return { url, token };
+  return null;
 }
 
 function readFile(): Post[] {
@@ -28,13 +32,16 @@ function readFile(): Post[] {
   }
 }
 
+async function getRedis() {
+  const config = getRedisConfig();
+  if (!config) return null;
+  const { Redis } = await import("@upstash/redis");
+  return new Redis({ url: config.url, token: config.token });
+}
+
 export async function getPosts(): Promise<Post[]> {
-  if (kvConfigured()) {
-    const { Redis } = await import("@upstash/redis");
-    const redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL!,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-    });
+  const redis = await getRedis();
+  if (redis) {
     const stored = await redis.get<Post[]>(KV_KEY);
     if (stored === null) {
       const seeded = readFile();
@@ -51,12 +58,8 @@ export async function getPost(slug: string): Promise<Post | undefined> {
 }
 
 export async function savePosts(posts: Post[]): Promise<void> {
-  if (kvConfigured()) {
-    const { Redis } = await import("@upstash/redis");
-    const redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL!,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-    });
+  const redis = await getRedis();
+  if (redis) {
     await redis.set(KV_KEY, posts);
     return;
   }
