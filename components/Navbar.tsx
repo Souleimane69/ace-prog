@@ -348,6 +348,8 @@ export default function Navbar() {
               display: "flex",
               flexDirection: "column",
               gap: "0",
+              maxHeight: "calc(100vh - 64px)",
+              overflowY: "auto",
             }}
           >
             {mainLinks.slice(0, 2).map((l) => (

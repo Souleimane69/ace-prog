@@ -128,7 +128,6 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
           padding: "8rem 2rem 4rem",
           width: "100%",
           display: "grid",
-          gridTemplateColumns: featuredPost ? "1fr 1fr" : "1fr",
           gap: "3rem",
           alignItems: "center",
         }}
@@ -283,7 +282,7 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
             initial="hidden"
             animate="show"
             style={{
-              fontSize: "clamp(3rem, 8vw, 7rem)",
+              fontSize: "clamp(2rem, 9vw, 7rem)",
               fontWeight: 900,
               lineHeight: 0.95,
               marginBottom: "1.5rem",

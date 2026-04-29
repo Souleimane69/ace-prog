@@ -19,6 +19,7 @@
 html {
   scroll-behavior: smooth;
   background-color: #16181D;
+  overflow-x: hidden;
 }
 
 body {
@@ -145,11 +146,18 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Stats Hero */
   .hero-stats {
-    gap: 1.5rem !important;
+    gap: 1rem !important;
     flex-wrap: wrap !important;
   }
   .hero-stats > div {
-    min-width: calc(33% - 1rem);
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .hero-stats > div p:first-child {
+    font-size: 1.6rem !important;
+  }
+  .hero-stats > div p:last-child {
+    font-size: 0.7rem !important;
   }
 
   /* Navbar */
