@@ -14,6 +14,10 @@ const items = [
   "Boîte DSG",
   "BSI / UCH / BCM",
   "Rectification Kilométrique",
+  "Virtual Cockpit",
+  "CarPlay / Android Auto",
+  "Options Cachées",
+  "Confort",
 ];
 
 export default function Ticker() {

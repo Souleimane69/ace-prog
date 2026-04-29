@@ -263,26 +263,6 @@ const tabContent: Record<Tab, React.ReactNode> = {
             </li>
           ))}
         </ul>
-        <Link
-          href="/nlink"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontFamily: "var(--font-display)",
-            fontSize: "0.7rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "#fff",
-            background: "#e63946",
-            padding: "0.8rem 1.8rem",
-            borderRadius: "4px",
-            textDecoration: "none",
-          }}
-        >
-          Découvrir N.LINK →
-        </Link>
       </div>
       <div
         style={{
