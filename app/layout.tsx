@@ -19,6 +19,12 @@ const SITE_URL = "https://aceprog.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/icon.svg",
+  },
   title: {
     default: "Ace Prog — Reprogrammation Moteur & Électronique Automobile",
     template: "%s | Ace Prog",
