@@ -14,6 +14,7 @@ const serviceLinks = [
   { id: "optimisation", label: "Optimisation", icon: "📈" },
   { id: "reparation", label: "Réparation / Clonage", icon: "🔧" },
   { id: "cles", label: "Clés", icon: "🔑" },
+  { id: "confort", label: "Confort", icon: "🖥️" },
   { id: "nlink", label: "N.LINK", icon: "📡" },
 ];
 
