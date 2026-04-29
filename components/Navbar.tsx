@@ -142,7 +142,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop nav */}
-        <nav style={{ display: "flex", gap: "1.75rem", alignItems: "center" }} className="hidden lg:flex">
+        <nav style={{ gap: "1.75rem", alignItems: "center" }} className="hidden lg:flex">
           {mainLinks.slice(0, 2).map((l) => (
             <NavButton
               key={l.href}
