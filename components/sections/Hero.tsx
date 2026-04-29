@@ -84,7 +84,7 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
-        overflow: "hidden",
+        overflowX: "hidden",
         background: "#16181D",
       }}
     >

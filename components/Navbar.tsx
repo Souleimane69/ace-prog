@@ -141,7 +141,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop nav */}
-        <nav style={{ display: "flex", gap: "1.75rem", alignItems: "center" }} className="hidden md:flex">
+        <nav style={{ display: "flex", gap: "1.75rem", alignItems: "center" }} className="hidden lg:flex">
           {mainLinks.slice(0, 2).map((l) => (
             <NavButton
               key={l.href}
@@ -262,7 +262,7 @@ export default function Navbar() {
         {/* CTA desktop */}
         <button
           onClick={() => scrollTo("#contact")}
-          className="hidden md:block"
+          className="hidden lg:block"
           style={{
             background: "#e63946",
             color: "#fff",
@@ -291,7 +291,7 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
           style={{

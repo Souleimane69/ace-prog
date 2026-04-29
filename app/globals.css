@@ -121,6 +121,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   /* Hero */
+  #accueil {
+    align-items: flex-start !important;
+  }
   .hero-content {
     padding-top: 5.5rem !important;
     padding-bottom: 3rem !important;
