@@ -1,38 +1,54 @@
 export type Ville = {
   slug: string;
   name: string;
-  region: string;
+  departement: string;
 };
 
+// Uniquement Auvergne-Rhône-Alpes
 export const VILLES: Ville[] = [
-  { slug: "lyon", name: "Lyon", region: "Auvergne-Rhône-Alpes" },
-  { slug: "paris", name: "Paris", region: "Île-de-France" },
-  { slug: "marseille", name: "Marseille", region: "Provence-Alpes-Côte d'Azur" },
-  { slug: "toulouse", name: "Toulouse", region: "Occitanie" },
-  { slug: "nice", name: "Nice", region: "Provence-Alpes-Côte d'Azur" },
-  { slug: "nantes", name: "Nantes", region: "Pays de la Loire" },
-  { slug: "montpellier", name: "Montpellier", region: "Occitanie" },
-  { slug: "strasbourg", name: "Strasbourg", region: "Grand Est" },
-  { slug: "bordeaux", name: "Bordeaux", region: "Nouvelle-Aquitaine" },
-  { slug: "lille", name: "Lille", region: "Hauts-de-France" },
-  { slug: "rennes", name: "Rennes", region: "Bretagne" },
-  { slug: "reims", name: "Reims", region: "Grand Est" },
-  { slug: "saint-etienne", name: "Saint-Étienne", region: "Auvergne-Rhône-Alpes" },
-  { slug: "grenoble", name: "Grenoble", region: "Auvergne-Rhône-Alpes" },
-  { slug: "dijon", name: "Dijon", region: "Bourgogne-Franche-Comté" },
-  { slug: "angers", name: "Angers", region: "Pays de la Loire" },
-  { slug: "toulon", name: "Toulon", region: "Provence-Alpes-Côte d'Azur" },
-  { slug: "brest", name: "Brest", region: "Bretagne" },
-  { slug: "tours", name: "Tours", region: "Centre-Val de Loire" },
-  { slug: "caen", name: "Caen", region: "Normandie" },
-  { slug: "metz", name: "Metz", region: "Grand Est" },
-  { slug: "rouen", name: "Rouen", region: "Normandie" },
-  { slug: "mulhouse", name: "Mulhouse", region: "Grand Est" },
-  { slug: "perpignan", name: "Perpignan", region: "Occitanie" },
-  { slug: "amiens", name: "Amiens", region: "Hauts-de-France" },
-  { slug: "limoges", name: "Limoges", region: "Nouvelle-Aquitaine" },
-  { slug: "clermont-ferrand", name: "Clermont-Ferrand", region: "Auvergne-Rhône-Alpes" },
-  { slug: "aix-en-provence", name: "Aix-en-Provence", region: "Provence-Alpes-Côte d'Azur" },
-  { slug: "nancy", name: "Nancy", region: "Grand Est" },
-  { slug: "orléans", name: "Orléans", region: "Centre-Val de Loire" },
+  // Rhône (69)
+  { slug: "lyon", name: "Lyon", departement: "Rhône" },
+  { slug: "villeurbanne", name: "Villeurbanne", departement: "Rhône" },
+  { slug: "venissieux", name: "Vénissieux", departement: "Rhône" },
+  { slug: "bron", name: "Bron", departement: "Rhône" },
+  { slug: "caluire-et-cuire", name: "Caluire-et-Cuire", departement: "Rhône" },
+  { slug: "decines-charpieu", name: "Décines-Charpieu", departement: "Rhône" },
+  { slug: "mions", name: "Mions", departement: "Rhône" },
+  // Isère (38)
+  { slug: "grenoble", name: "Grenoble", departement: "Isère" },
+  { slug: "vienne", name: "Vienne", departement: "Isère" },
+  { slug: "bourgoin-jallieu", name: "Bourgoin-Jallieu", departement: "Isère" },
+  { slug: "voiron", name: "Voiron", departement: "Isère" },
+  // Loire (42)
+  { slug: "saint-etienne", name: "Saint-Étienne", departement: "Loire" },
+  { slug: "roanne", name: "Roanne", departement: "Loire" },
+  // Ain (01)
+  { slug: "bourg-en-bresse", name: "Bourg-en-Bresse", departement: "Ain" },
+  { slug: "oyonnax", name: "Oyonnax", departement: "Ain" },
+  // Drôme (26)
+  { slug: "valence", name: "Valence", departement: "Drôme" },
+  { slug: "romans-sur-isere", name: "Romans-sur-Isère", departement: "Drôme" },
+  { slug: "montelimar", name: "Montélimar", departement: "Drôme" },
+  // Ardèche (07)
+  { slug: "aubenas", name: "Aubenas", departement: "Ardèche" },
+  { slug: "annonay", name: "Annonay", departement: "Ardèche" },
+  // Haute-Savoie (74)
+  { slug: "annecy", name: "Annecy", departement: "Haute-Savoie" },
+  { slug: "annemasse", name: "Annemasse", departement: "Haute-Savoie" },
+  { slug: "thonon-les-bains", name: "Thonon-les-Bains", departement: "Haute-Savoie" },
+  // Savoie (73)
+  { slug: "chambery", name: "Chambéry", departement: "Savoie" },
+  { slug: "albertville", name: "Albertville", departement: "Savoie" },
+  { slug: "aix-les-bains", name: "Aix-les-Bains", departement: "Savoie" },
+  // Puy-de-Dôme (63)
+  { slug: "clermont-ferrand", name: "Clermont-Ferrand", departement: "Puy-de-Dôme" },
+  { slug: "riom", name: "Riom", departement: "Puy-de-Dôme" },
+  // Allier (03)
+  { slug: "vichy", name: "Vichy", departement: "Allier" },
+  { slug: "moulins", name: "Moulins", departement: "Allier" },
+  { slug: "montlucon", name: "Montluçon", departement: "Allier" },
+  // Haute-Loire (43)
+  { slug: "le-puy-en-velay", name: "Le Puy-en-Velay", departement: "Haute-Loire" },
+  // Cantal (15)
+  { slug: "aurillac", name: "Aurillac", departement: "Cantal" },
 ];

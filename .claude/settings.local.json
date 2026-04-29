@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"/c/Users/Souleimane/Downloads/modif site.pdf\" \"/c/Users/Souleimane/Documents/Ali Can/ace-prog/public/\")",
+      "Read(//c/Users/Souleimane/Downloads//**)",
+      "Bash(ls -t /c/Users/Souleimane/AppData/Local/Temp/*.png /c/Users/Souleimane/AppData/Local/Temp/*.tmp.png)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npm install *)",
+      "Bash(npm ls *)",
+      "Bash(npm run *)",
+      "Bash(xargs grep *)",
+      "Bash(git commit -m 'Contact : envoi vers Gmail en attendant vérification domaine Resend *)",
+      "Bash(git commit -m 'Contact : remplace Resend par Nodemailer/Gmail pour envoyer vers contact@aceprog.com *)",
+      "Bash(git commit -m 'SEO : ajout vérification Google Search Console *)",
+      "Bash(git commit -m 'Hero : remet ParticleCanvas sur la page d'\\\\''accueil *)",
+      "Bash(git commit -m 'Footer : remplace texte ACE PROG par le logo blanc *)",
+      "Bash(git commit -m 'Footer : centre le logo *)",
+      "Bash(git commit -m 'Optimisation mobile : padding, tabs scrollables, boutons full-width, touch targets *)",
+      "Bash(git commit -m 'Navbar : met Qui sommes-nous avant Nos Services *)",
+      "Bash(git commit -m 'Revert : remets l'\\\\''animation particules d'\\\\''origine *)"
+    ]
+  }
+}

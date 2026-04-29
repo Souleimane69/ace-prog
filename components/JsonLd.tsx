@@ -18,11 +18,18 @@ export default function JsonLd() {
         image: "https://aceprog.com/logo.png",
         priceRange: "€€",
         areaServed: [
-          { "@type": "Country", name: "France" },
+          {
+            "@type": "AdministrativeArea",
+            name: "Auvergne-Rhône-Alpes",
+            containedInPlace: { "@type": "Country", name: "France" },
+          },
           ...VILLES.map((v) => ({
             "@type": "City",
             name: v.name,
-            containedInPlace: { "@type": "AdministrativeArea", name: v.region },
+            containedInPlace: {
+              "@type": "AdministrativeArea",
+              name: `${v.departement}, Auvergne-Rhône-Alpes`,
+            },
           })),
         ],
         hasOfferCatalog: {
