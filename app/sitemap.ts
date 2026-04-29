@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getPosts } from "@/lib/posts";
+import { VILLES } from "@/lib/villes";
 
 const SITE_URL = "https://aceprog.com";
 
@@ -11,6 +12,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
     priority: 0.6,
+  }));
+
+  const villeEntries: MetadataRoute.Sitemap = VILLES.map((v) => ({
+    url: `${SITE_URL}/reprogrammation-moteur-${v.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.75,
   }));
 
   return [
@@ -32,6 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    ...villeEntries,
     ...postEntries,
   ];
 }

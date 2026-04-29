@@ -1,3 +1,5 @@
+import { VILLES } from "@/lib/villes";
+
 export default function JsonLd() {
   const schema = {
     "@context": "https://schema.org",
@@ -15,10 +17,14 @@ export default function JsonLd() {
         logo: "https://aceprog.com/logo.png",
         image: "https://aceprog.com/logo.png",
         priceRange: "€€",
-        areaServed: {
-          "@type": "Country",
-          name: "France",
-        },
+        areaServed: [
+          { "@type": "Country", name: "France" },
+          ...VILLES.map((v) => ({
+            "@type": "City",
+            name: v.name,
+            containedInPlace: { "@type": "AdministrativeArea", name: v.region },
+          })),
+        ],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Services Ace Prog",
