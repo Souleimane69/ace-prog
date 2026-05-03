@@ -11,6 +11,7 @@ export interface Post {
   contentMd: string;
   content: string;
   featured?: boolean;
+  coverImage?: string;
 }
 
 const DATA_PATH = path.join(process.cwd(), "data", "posts.json");

@@ -14,6 +14,7 @@ interface Post {
   contentMd: string;
   content: string;
   featured?: boolean;
+  coverImage?: string;
 }
 
 type View = "list" | "create" | "edit";
@@ -561,16 +562,47 @@ function PostForm({
   const [date, setDate] = useState(post?.date ?? today);
   const [excerpt, setExcerpt] = useState(post?.excerpt ?? "");
   const [contentMd, setContentMd] = useState(post?.contentMd ?? "");
+  const [coverImage, setCoverImage] = useState(post?.coverImage ?? "");
+  const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  const isVideo = (url: string) =>
+    url.match(/\.(mp4|webm)$/i) !== null;
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError("");
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: form,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Erreur upload");
+      } else {
+        setCoverImage(data.url);
+      }
+    } catch {
+      setError("Erreur réseau lors de l'upload");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setError("");
 
-    const payload = { title, category, date, excerpt, contentMd };
+    const payload = { title, category, date, excerpt, contentMd, coverImage: coverImage || null };
     const url = isEdit ? `/api/posts/${post!.slug}` : "/api/posts";
     const method = isEdit ? "PUT" : "POST";
 
@@ -710,6 +742,89 @@ function PostForm({
               placeholder="1 à 2 phrases qui donnent envie de lire l'article."
               required
             />
+          </div>
+
+          {/* Image / vidéo de couverture */}
+          <div>
+            <label style={S.label}>Image ou vidéo de couverture</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {/* Upload */}
+              <label
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.6rem",
+                  cursor: "pointer",
+                  background: "#22252E",
+                  border: "1px dashed #3D4250",
+                  borderRadius: "4px",
+                  padding: "0.75rem 1.25rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: uploading ? "#555" : "#b0b4c0",
+                }}
+              >
+                {uploading ? "Upload en cours…" : "⬆ Choisir un fichier (image / vidéo)"}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"
+                  style={{ display: "none" }}
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                />
+              </label>
+
+              {/* URL manuelle */}
+              <input
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+                style={S.input}
+                placeholder="Ou collez une URL (https://...)"
+              />
+
+              {/* Aperçu */}
+              {coverImage && (
+                <div style={{ position: "relative", borderRadius: "6px", overflow: "hidden", maxHeight: "220px" }}>
+                  {isVideo(coverImage) ? (
+                    <video
+                      src={coverImage}
+                      controls
+                      style={{ width: "100%", maxHeight: "220px", objectFit: "cover", display: "block" }}
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={coverImage}
+                      alt="Aperçu"
+                      style={{ width: "100%", maxHeight: "220px", objectFit: "cover", display: "block" }}
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setCoverImage("")}
+                    style={{
+                      position: "absolute",
+                      top: "0.5rem",
+                      right: "0.5rem",
+                      background: "rgba(0,0,0,0.7)",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "4px",
+                      padding: "0.25rem 0.6rem",
+                      cursor: "pointer",
+                      fontFamily: "var(--font-display)",
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ✕ Retirer
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Contenu */}

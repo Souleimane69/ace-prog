@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getPosts, getPost } from "@/lib/posts";
@@ -141,6 +142,37 @@ export default async function PostPage({ params }: Props) {
             </p>
           </div>
         </div>
+
+        {/* Image / vidéo de couverture */}
+        {post.coverImage && (
+          <div style={{ maxWidth: "860px", margin: "0 auto", padding: "2.5rem 2rem 0" }}>
+            {post.coverImage.match(/\.(mp4|webm)$/i) ? (
+              <video
+                src={post.coverImage}
+                controls
+                style={{
+                  width: "100%",
+                  borderRadius: "8px",
+                  display: "block",
+                  maxHeight: "480px",
+                  objectFit: "cover",
+                  background: "#111318",
+                }}
+              />
+            ) : (
+              <div style={{ position: "relative", width: "100%", height: "clamp(220px, 40vw, 480px)", borderRadius: "8px", overflow: "hidden" }}>
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 860px) 100vw, 860px"
+                  priority
+                />
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Contenu */}
         <div style={{ maxWidth: "860px", margin: "0 auto", padding: "3.5rem 2rem 5rem" }}>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import ParticleCanvas from "@/components/ParticleCanvas";
 import type { Post } from "@/lib/posts";
 
@@ -159,11 +160,32 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
                 background: "rgba(22,24,29,0.75)",
                 border: "1px solid rgba(230,57,70,0.4)",
                 borderRadius: "10px",
-                padding: "2rem",
+                overflow: "hidden",
                 backdropFilter: "blur(12px)",
                 boxShadow: "0 0 60px rgba(230,57,70,0.08)",
               }}
             >
+              {/* Image de couverture */}
+              {featuredPost.coverImage && (
+                <div style={{ position: "relative", width: "100%", height: "200px" }}>
+                  <Image
+                    src={featuredPost.coverImage}
+                    alt={featuredPost.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to bottom, transparent 50%, rgba(22,24,29,0.9) 100%)",
+                    }}
+                  />
+                </div>
+              )}
+
+              <div style={{ padding: "2rem" }}>
               {/* Catégorie + date */}
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
                 <span
@@ -251,6 +273,7 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
               >
                 Lire l&apos;article →
               </Link>
+              </div>
             </div>
           </motion.div>
         )}

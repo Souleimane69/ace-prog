@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
-  const { title, category, excerpt, contentMd, date } = await req.json();
+  const { title, category, excerpt, contentMd, date, coverImage } = await req.json();
 
   if (!title?.trim() || !category?.trim() || !excerpt?.trim() || !contentMd?.trim()) {
     return NextResponse.json({ error: "Tous les champs sont obligatoires" }, { status: 400 });
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     excerpt: excerpt.trim(),
     contentMd: contentMd.trim(),
     content: markdownToHtml(contentMd.trim()),
+    ...(coverImage ? { coverImage } : {}),
   };
 
   try {
