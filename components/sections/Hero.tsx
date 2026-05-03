@@ -166,10 +166,10 @@ export default function Hero({ featuredPost }: { featuredPost: Post | null }) {
               }}
             >
               {/* Image de couverture */}
-              {featuredPost.coverImage && (
+              {featuredPost.images?.[0] && (
                 <div style={{ position: "relative", width: "100%", height: "200px" }}>
                   <Image
-                    src={featuredPost.coverImage}
+                    src={featuredPost.images[0]}
                     alt={featuredPost.title}
                     fill
                     style={{ objectFit: "cover" }}

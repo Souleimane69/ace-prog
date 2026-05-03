@@ -143,32 +143,57 @@ export default async function PostPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Image / vidéo de couverture */}
-        {post.coverImage && (
+        {/* Image / vidéo de couverture + galerie */}
+        {post.images && post.images.length > 0 && (
           <div style={{ maxWidth: "860px", margin: "0 auto", padding: "2.5rem 2rem 0" }}>
-            {post.coverImage.match(/\.(mp4|webm)$/i) ? (
+            {/* Couverture (1ère image) */}
+            {/\.(mp4|webm)$/i.test(post.images[0]) ? (
               <video
-                src={post.coverImage}
+                src={post.images[0]}
                 controls
-                style={{
-                  width: "100%",
-                  borderRadius: "8px",
-                  display: "block",
-                  maxHeight: "480px",
-                  objectFit: "cover",
-                  background: "#111318",
-                }}
+                style={{ width: "100%", borderRadius: "8px", display: "block", maxHeight: "480px", objectFit: "cover", background: "#111318" }}
               />
             ) : (
               <div style={{ position: "relative", width: "100%", height: "clamp(220px, 40vw, 480px)", borderRadius: "8px", overflow: "hidden" }}>
                 <Image
-                  src={post.coverImage}
+                  src={post.images[0]}
                   alt={post.title}
                   fill
                   style={{ objectFit: "cover" }}
                   sizes="(max-width: 860px) 100vw, 860px"
                   priority
                 />
+              </div>
+            )}
+
+            {/* Galerie des images suivantes */}
+            {post.images.length > 1 && (
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                gap: "0.75rem",
+                marginTop: "0.75rem",
+              }}>
+                {post.images.slice(1).map((src, i) => (
+                  /\.(mp4|webm)$/i.test(src) ? (
+                    <video
+                      key={i}
+                      src={src}
+                      controls
+                      style={{ width: "100%", height: "160px", objectFit: "cover", borderRadius: "6px", display: "block", background: "#111318" }}
+                    />
+                  ) : (
+                    <div key={i} style={{ position: "relative", height: "160px", borderRadius: "6px", overflow: "hidden" }}>
+                      <Image
+                        src={src}
+                        alt={`Photo ${i + 2}`}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        sizes="(max-width: 860px) 50vw, 280px"
+                      />
+                    </div>
+                  )
+                ))}
               </div>
             )}
           </div>

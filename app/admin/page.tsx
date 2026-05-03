@@ -14,7 +14,7 @@ interface Post {
   contentMd: string;
   content: string;
   featured?: boolean;
-  coverImage?: string;
+  images?: string[];
 }
 
 type View = "list" | "create" | "edit";
@@ -562,38 +562,57 @@ function PostForm({
   const [date, setDate] = useState(post?.date ?? today);
   const [excerpt, setExcerpt] = useState(post?.excerpt ?? "");
   const [contentMd, setContentMd] = useState(post?.contentMd ?? "");
-  const [coverImage, setCoverImage] = useState(post?.coverImage ?? "");
+  const [images, setImages] = useState<string[]>(post?.images ?? []);
+  const [urlInput, setUrlInput] = useState("");
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  const isVideo = (url: string) =>
-    url.match(/\.(mp4|webm)$/i) !== null;
+  const isVideo = (url: string) => /\.(mp4|webm)$/i.test(url);
+
+  const addImage = (url: string) => {
+    if (url.trim()) setImages((prev) => [...prev, url.trim()]);
+  };
+
+  const removeImage = (idx: number) =>
+    setImages((prev) => prev.filter((_, i) => i !== idx));
+
+  const moveImage = (idx: number, dir: -1 | 1) => {
+    setImages((prev) => {
+      const next = [...prev];
+      const target = idx + dir;
+      if (target < 0 || target >= next.length) return prev;
+      [next[idx], next[target]] = [next[target], next[idx]];
+      return next;
+    });
+  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
     setUploading(true);
     setError("");
     try {
-      const form = new FormData();
-      form.append("file", file);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: form,
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Erreur upload");
-      } else {
-        setCoverImage(data.url);
+      const urls: string[] = [];
+      for (const file of files) {
+        const form = new FormData();
+        form.append("file", file);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: form,
+        });
+        const data = await res.json();
+        if (!res.ok) { setError(data.error || "Erreur upload"); break; }
+        urls.push(data.url);
       }
+      setImages((prev) => [...prev, ...urls]);
     } catch {
       setError("Erreur réseau lors de l'upload");
     } finally {
       setUploading(false);
+      e.target.value = "";
     }
   };
 
@@ -602,7 +621,7 @@ function PostForm({
     setSaving(true);
     setError("");
 
-    const payload = { title, category, date, excerpt, contentMd, coverImage: coverImage || null };
+    const payload = { title, category, date, excerpt, contentMd, images };
     const url = isEdit ? `/api/posts/${post!.slug}` : "/api/posts";
     const method = isEdit ? "PUT" : "POST";
 
@@ -744,17 +763,20 @@ function PostForm({
             />
           </div>
 
-          {/* Image / vidéo de couverture */}
+          {/* Images / vidéos */}
           <div>
-            <label style={S.label}>Image ou vidéo de couverture</label>
+            <label style={S.label}>
+              Images / vidéos{images.length > 0 && ` (${images.length}) — la 1ère est la couverture`}
+            </label>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {/* Upload */}
+
+              {/* Bouton upload multiple */}
               <label
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.6rem",
-                  cursor: "pointer",
+                  cursor: uploading ? "default" : "pointer",
                   background: "#22252E",
                   border: "1px dashed #3D4250",
                   borderRadius: "4px",
@@ -767,9 +789,10 @@ function PostForm({
                   color: uploading ? "#555" : "#b0b4c0",
                 }}
               >
-                {uploading ? "Upload en cours…" : "⬆ Choisir un fichier (image / vidéo)"}
+                {uploading ? "Upload en cours…" : "⬆ Ajouter des fichiers (images / vidéos)"}
                 <input
                   type="file"
+                  multiple
                   accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"
                   style={{ display: "none" }}
                   onChange={handleFileUpload}
@@ -777,51 +800,100 @@ function PostForm({
                 />
               </label>
 
-              {/* URL manuelle */}
-              <input
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                style={S.input}
-                placeholder="Ou collez une URL (https://...)"
-              />
+              {/* Ajout par URL */}
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <input
+                  value={urlInput}
+                  onChange={(e) => setUrlInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addImage(urlInput);
+                      setUrlInput("");
+                    }
+                  }}
+                  style={{ ...S.input, flex: 1 }}
+                  placeholder="Ou collez une URL et appuyez Entrée"
+                />
+                <button
+                  type="button"
+                  onClick={() => { addImage(urlInput); setUrlInput(""); }}
+                  style={{ ...S.btnGhost, padding: "0.65rem 1rem", whiteSpace: "nowrap" }}
+                >
+                  + Ajouter
+                </button>
+              </div>
 
-              {/* Aperçu */}
-              {coverImage && (
-                <div style={{ position: "relative", borderRadius: "6px", overflow: "hidden", maxHeight: "220px" }}>
-                  {isVideo(coverImage) ? (
-                    <video
-                      src={coverImage}
-                      controls
-                      style={{ width: "100%", maxHeight: "220px", objectFit: "cover", display: "block" }}
-                    />
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={coverImage}
-                      alt="Aperçu"
-                      style={{ width: "100%", maxHeight: "220px", objectFit: "cover", display: "block" }}
-                    />
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setCoverImage("")}
-                    style={{
-                      position: "absolute",
-                      top: "0.5rem",
-                      right: "0.5rem",
-                      background: "rgba(0,0,0,0.7)",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "4px",
-                      padding: "0.25rem 0.6rem",
-                      cursor: "pointer",
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                    }}
-                  >
-                    ✕ Retirer
-                  </button>
+              {/* Grille des médias ajoutés */}
+              {images.length > 0 && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "0.75rem" }}>
+                  {images.map((url, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        position: "relative",
+                        borderRadius: "6px",
+                        overflow: "hidden",
+                        border: idx === 0 ? "2px solid #e63946" : "1px solid #3D4250",
+                        background: "#111318",
+                      }}
+                    >
+                      {/* Badge couverture */}
+                      {idx === 0 && (
+                        <span style={{
+                          position: "absolute",
+                          top: "0.35rem",
+                          left: "0.35rem",
+                          background: "#e63946",
+                          color: "#fff",
+                          fontFamily: "var(--font-display)",
+                          fontSize: "0.5rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          padding: "0.15rem 0.45rem",
+                          borderRadius: "3px",
+                          zIndex: 1,
+                        }}>
+                          Couverture
+                        </span>
+                      )}
+
+                      {/* Miniature */}
+                      {isVideo(url) ? (
+                        <video src={url} style={{ width: "100%", height: "110px", objectFit: "cover", display: "block" }} />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={url} alt="" style={{ width: "100%", height: "110px", objectFit: "cover", display: "block" }} />
+                      )}
+
+                      {/* Actions */}
+                      <div style={{ display: "flex", justifyContent: "space-between", padding: "0.35rem 0.4rem", background: "#16181D" }}>
+                        <div style={{ display: "flex", gap: "0.25rem" }}>
+                          <button
+                            type="button"
+                            onClick={() => moveImage(idx, -1)}
+                            disabled={idx === 0}
+                            style={{ background: "none", border: "none", color: idx === 0 ? "#333" : "#b0b4c0", cursor: idx === 0 ? "default" : "pointer", fontSize: "0.8rem", padding: "0.1rem 0.3rem" }}
+                            title="Déplacer à gauche"
+                          >←</button>
+                          <button
+                            type="button"
+                            onClick={() => moveImage(idx, 1)}
+                            disabled={idx === images.length - 1}
+                            style={{ background: "none", border: "none", color: idx === images.length - 1 ? "#333" : "#b0b4c0", cursor: idx === images.length - 1 ? "default" : "pointer", fontSize: "0.8rem", padding: "0.1rem 0.3rem" }}
+                            title="Déplacer à droite"
+                          >→</button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(idx)}
+                          style={{ background: "none", border: "none", color: "#e63946", cursor: "pointer", fontSize: "0.8rem", padding: "0.1rem 0.3rem" }}
+                          title="Supprimer"
+                        >✕</button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

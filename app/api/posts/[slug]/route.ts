@@ -17,7 +17,7 @@ export async function PUT(req: NextRequest, { params }: Props) {
   }
 
   const { slug } = await params;
-  const { title, category, excerpt, contentMd, date, featured, coverImage } = await req.json();
+  const { title, category, excerpt, contentMd, date, featured, images } = await req.json();
 
   const posts = await getPosts();
   const idx = posts.findIndex((p) => p.slug === slug);
@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest, { params }: Props) {
     contentMd: contentMd?.trim() ?? posts[idx].contentMd,
     content: contentMd ? markdownToHtml(contentMd.trim()) : posts[idx].content,
     ...(featured !== undefined && { featured: !!featured }),
-    ...(coverImage !== undefined && { coverImage: coverImage || undefined }),
+    ...(images !== undefined && { images: Array.isArray(images) && images.length ? images : undefined }),
   };
 
   await savePosts(posts);
