@@ -261,34 +261,66 @@ export default function Navbar() {
         </nav>
 
         {/* CTA desktop */}
-        <button
-          onClick={() => scrollTo("#contact")}
-          className="hidden lg:block"
-          style={{
-            background: "#e63946",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-            fontFamily: "var(--font-display)",
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            padding: "0.6rem 1.4rem",
-            borderRadius: "4px",
-            transition: "background 0.2s ease, box-shadow 0.2s ease",
-          }}
-          onMouseEnter={(e) => {
-            (e.target as HTMLButtonElement).style.background = "#c0392b";
-            (e.target as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(230,57,70,0.4)";
-          }}
-          onMouseLeave={(e) => {
-            (e.target as HTMLButtonElement).style.background = "#e63946";
-            (e.target as HTMLButtonElement).style.boxShadow = "none";
-          }}
-        >
-          Devis gratuit
-        </button>
+        <div className="hidden lg:flex" style={{ alignItems: "center", gap: "0.75rem" }}>
+          <a
+            href="https://files.aceprog.com/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: "transparent",
+              color: "#a0a0a0",
+              border: "1px solid #3D4250",
+              cursor: "pointer",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              padding: "0.6rem 1.2rem",
+              borderRadius: "4px",
+              textDecoration: "none",
+              transition: "border-color 0.2s ease, color 0.2s ease",
+              display: "inline-block",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "#e63946";
+              (e.currentTarget as HTMLAnchorElement).style.color = "#e63946";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "#3D4250";
+              (e.currentTarget as HTMLAnchorElement).style.color = "#a0a0a0";
+            }}
+          >
+            Espace fichiers
+          </a>
+          <button
+            onClick={() => scrollTo("#contact")}
+            style={{
+              background: "#e63946",
+              color: "#fff",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "var(--font-display)",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              padding: "0.6rem 1.4rem",
+              borderRadius: "4px",
+              transition: "background 0.2s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              (e.target as HTMLButtonElement).style.background = "#c0392b";
+              (e.target as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(230,57,70,0.4)";
+            }}
+            onMouseLeave={(e) => {
+              (e.target as HTMLButtonElement).style.background = "#e63946";
+              (e.target as HTMLButtonElement).style.boxShadow = "none";
+            }}
+          >
+            Devis gratuit
+          </button>
+        </div>
 
         {/* Hamburger */}
         <button
@@ -443,10 +475,34 @@ export default function Navbar() {
               />
             ))}
 
+            <a
+              href="https://files.aceprog.com/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                marginTop: "0.75rem",
+                background: "transparent",
+                color: "#a0a0a0",
+                border: "1px solid #3D4250",
+                cursor: "pointer",
+                fontFamily: "var(--font-display)",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                padding: "0.9rem",
+                borderRadius: "4px",
+                textDecoration: "none",
+                textAlign: "center",
+                display: "block",
+              }}
+            >
+              Espace fichiers
+            </a>
             <button
               onClick={() => scrollTo("#contact")}
               style={{
-                marginTop: "0.75rem",
+                marginTop: "0.5rem",
                 background: "#e63946",
                 color: "#fff",
                 border: "none",
